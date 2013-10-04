@@ -2,12 +2,12 @@ I.  High Level programs (in the "Main_Calls" folder) call the FDTR and TDTR calc
 *THESE ARE THE PROGRAMS USERS NORMALLY EDIT/RUN FOR THEIR SPECIFIC NEEDS.  IF ONE DOESN'T EXIST FOR YOUR TASK, YOU SHOULD WRITE ONE.*
 These are the included "Main_Calls" right now:
 
-	A.  Load/Fit standard TDTR data ( ratio vs td)
-	B.  Estimate Error bars
+	A.  Load/Fit standard TDTR data ( ratio vs td) ("TDTR_3DAni_StandardTDTR.m")
+	B.  Estimate Error bars (Program hasn't been developed yet)
 	C.  Calculate FWHM of beam-offset TDTR experiments -> ("TDTR_Ani3D_FWHM_Map.m")
 	D.  Calculate sensitivity plots for
-		i)  standard TDTR, ratio vs. td
-		ii)  beam offset TDTR, FWHM vs. freq
+		i)  standard TDTR, ratio sensitivity vs. td (option in "TDTR_3DAni_StandardTDTR.m" to call "TDTR_Ani3D_GetSensitivities.m")
+		ii)  beam offset TDTR, FWHM sensitivity to all input parameters ("TDTR_Ani3D_GetSensitivities.m" which calls "CalcFWHMs.m")
 
 %%%%%%%%%%%%%%%%%
 How the scripts/functions are structured:
