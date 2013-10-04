@@ -1,8 +1,23 @@
+I.  High Level programs (in the "Main_Calls" folder) call the FDTR and TDTR calculations to accomplish specific tasks.
+*THESE ARE THE PROGRAMS USERS NORMALLY EDIT/RUN FOR THEIR SPECIFIC NEEDS.  IF ONE DOESN'T EXIST FOR YOUR TASK, YOU SHOULD WRITE ONE.*
+These are the included "Main_Calls" right now:
+
+	A.  Load/Fit standard TDTR data ( ratio vs td)
+	B.  Estimate Error bars
+	C.  Calculate FWHM of beam-offset TDTR experiments -> ("TDTR_Ani3D_FWHM_Map.m")
+	D.  Calculate sensitivity plots for
+		i)  standard TDTR, ratio vs. td
+		ii)  beam offset TDTR, FWHM vs. freq
+
+%%%%%%%%%%%%%%%%%
 How the scripts/functions are structured:
 
-There are several programs that, together, allow you to simulate TDTR or FDTR with arbitrary spot shape and arbitrary thermal conductivity tensor.  It utilizes multicore and multiCPU capability when software and hardware permit.  This distribution is particularly enhanced by the parallel computing toolbox, although it will use multicore regardless.
-%%%%%%%%%%%%%%
-I.  Calculating the Frequency Response (i.e FDTR)
+There are several programs that, together, allow you to simulate TDTR or FDTR with arbitrary spot shape and arbitrary thermal conductivity tensor.  
+
+NOTE:  The programs utilize multicore and multiCPU capability when software and hardware permit.  This distribution is particularly enhanced by the parallel computing toolbox, although it will use multicore regardless.
+%%%%%%%%%%%%%%%%%
+
+II.  Calculating the Frequency Response (i.e FDTR)
 
 At the core of the program is the ability to calculate the frequency domain response (i.e. the "sensed temperature" of a temporaly contant intensity sensing beam when a sinusoidally oscillating "pump" beam heats the surface) for arbitrary spot shapes and thermal conductivity tensors.  For TDTR, the signal is simulated as a near-infinite sum over all the relavent frequency responses.  
 
@@ -27,7 +42,7 @@ To calculate the frequency response:
 [G] = TDTR_3DAni_getG_savespace(xi,eta,f,k,C,h)
 
 %%%%%%%%%%%%%%%%
-II.  Calculating the TDTR Signal
+III.  Calculating the TDTR Signal
 
 The required M-files are:
 (Every file required for FDTR) +
@@ -40,13 +55,4 @@ To calculate the TDTR signal:
 [Vout] = TDTR_3DAni_getVout_wOffset_v2(tdelay,k,C,h,f,tau_rep,wp_x,wp_y,Qp,ws_x,ws_y,TCR,xoffset,yoffset)
 
 where "tdelay" is a vector of time delays.  If TCR=1, then "Vout" is the Out-of-phase Temperature, if TCR is the thermoreflectance coefficient, then "Vout" is the out-of-phase reflectivity signal. 
-
 %%%%%%%%%%%%%%%%
-III.  High Level ("Main") programs call the FDTR and TDTR calculations to accomplish the following:
-
-	A.  Load/Fit standard TDTR data ( ratio vs td)
-	B.  Estimate Error bars
-	C.  Calculate FWHM of beam-offset TDTR experiments
-	D.  Calculate sensitivity plots for
-		i)  standard TDTR, ratio vs. td
-		ii)  beam offset TDTR, FWHM vs. freq
