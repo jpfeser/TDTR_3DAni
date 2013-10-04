@@ -1,4 +1,4 @@
-function [Kernal] = TDTR_3DAni_getTintegral_wOffset_v2(xi,eta,f,k,C,h,wp_x,wp_y,Qp,ws_x,ws_y,xoffset,yoffset)
+function [Kernal] = TDTR_3DAni_getTintegrand(xi,eta,f,k,C,h,wp_x,wp_y,Qp,ws_x,ws_y,xoffset,yoffset)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 %[G] = TDTR_3DAni_getG(xi,eta,f,k,C,h);

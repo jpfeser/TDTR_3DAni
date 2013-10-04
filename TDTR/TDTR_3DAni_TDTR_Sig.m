@@ -1,4 +1,4 @@
-function Vout = TDTR_3DAni_getVout_wOffset_v2(tdelay,k,C,h,f,tau_rep,wp_x,wp_y,Qp,ws_x,ws_y,TCR,xoffset,yoffset)
+function [Vout,Vin,ratio] = TDTR_3DAni_TDTR_Sig(tdelay,k,C,h,f,tau_rep,wp_x,wp_y,Qp,ws_x,ws_y,TCR,xoffset,yoffset)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -25,17 +25,17 @@ d=2*pi*boundary_y;
 fprintf('calculating freq responses...\n')
 tic
 if license('test','distrib_computing_toolbox')
-    parfor i = 1:length(mvect)
-        [dT1(i),n1]=rombint2D(@(ETA,NU,FF) TDTR_3DAni_getTintegral_wOffset_v2(ETA,NU,FF,k,C,h,wp_x,wp_y,Qp,ws_x,ws_y,xoffset,yoffset),a,b,c,d,mvect(i)/tau_rep+f);
-        [dT2(i),n2]=rombint2D(@(ETA,NU,FF) TDTR_3DAni_getTintegral_wOffset_v2(ETA,NU,FF,k,C,h,wp_x,wp_y,Qp,ws_x,ws_y,xoffset,yoffset),a,b,c,d,mvect(i)/tau_rep-f);
+parfor i = 1:length(mvect)
+    [dT1(i),n1]=rombint2D(@(ETA,NU,FF) TDTR_3DAni_getTintegrand(ETA,NU,FF,k,C,h,wp_x,wp_y,Qp,ws_x,ws_y,xoffset,yoffset),a,b,c,d,mvect(i)/tau_rep+f);
+    [dT2(i),n2]=rombint2D(@(ETA,NU,FF) TDTR_3DAni_getTintegrand(ETA,NU,FF,k,C,h,wp_x,wp_y,Qp,ws_x,ws_y,xoffset,yoffset),a,b,c,d,mvect(i)/tau_rep-f);
     %[i,2^(2*n1)] %comment to hide progress output
-    end
+end
 else
-    for i = 1:length(mvect)
-        [dT1(i),n1]=rombint2D(@(ETA,NU,FF) TDTR_3DAni_getTintegral_wOffset_v2(ETA,NU,FF,k,C,h,wp_x,wp_y,Qp,ws_x,ws_y,xoffset,yoffset),a,b,c,d,mvect(i)/tau_rep+f);
-        [dT2(i),n2]=rombint2D(@(ETA,NU,FF) TDTR_3DAni_getTintegral_wOffset_v2(ETA,NU,FF,k,C,h,wp_x,wp_y,Qp,ws_x,ws_y,xoffset,yoffset),a,b,c,d,mvect(i)/tau_rep-f);
+for i = 1:length(mvect)
+    [dT1(i),n1]=rombint2D(@(ETA,NU,FF) TDTR_3DAni_getTintegrand(ETA,NU,FF,k,C,h,wp_x,wp_y,Qp,ws_x,ws_y,xoffset,yoffset),a,b,c,d,mvect(i)/tau_rep+f);
+    [dT2(i),n2]=rombint2D(@(ETA,NU,FF) TDTR_3DAni_getTintegrand(ETA,NU,FF,k,C,h,wp_x,wp_y,Qp,ws_x,ws_y,xoffset,yoffset),a,b,c,d,mvect(i)/tau_rep-f);
     %[i,2^(2*n1)] %comment to hide progress output
-    end
+end
 end
 toc
 fprintf('finished freq responses...\n')
@@ -54,6 +54,7 @@ deltaRm=TCR*(Resum+ii*Imsum); %
 deltaR=deltaRm.*exp(ii*2*pi*f*tdelay); %Reflectance Fluxation (Complex)
 
 ratio=-real(deltaR)./imag(deltaR);
+Vin = real(deltaR);
 Vout = imag(deltaR);
 
 end
