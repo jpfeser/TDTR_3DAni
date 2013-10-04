@@ -24,7 +24,7 @@ At the core of the program is the ability to calculate the frequency domain resp
 The required M-files are:
 "rombint2D.m"
 "trap2D.m"
-"TDTR_3DAni_getTintegral_wOffset_v2.m"
+"TDTR_3DAni_getTintegrand.m"
 "TDTR_3DAni_getG_savespace.m"
 
 To calculate the frequency response:  
@@ -35,7 +35,7 @@ To calculate the frequency response:
 
 - The Kernal is evaluated using the function call:
 
-[Kernal] = TDTR_3DAni_getTintegral_wOffset_v2(xi,eta,f,k,C,h,wp_x,wp_y,Qp,ws_x,ws_y,xoffset,yoffset)
+[Kernal] = TDTR_3DAni_getTintegrand(xi,eta,f,k,C,h,wp_x,wp_y,Qp,ws_x,ws_y,xoffset,yoffset)
 
 - "TDTR_3DAni_getTintegral_wOffset_v2.m" calls the function "TDTR_3DAni_getG_savespace.m"  The "savespace" refers to the fact the the program reuses some of the matrices in order to save memory.  This was a major issue in early version of the program, but may not be necessary now.  As a result of the "savespace" the script is difficult to read, (consider revising in a future version)  
 
@@ -46,13 +46,13 @@ III.  Calculating the TDTR Signal
 
 The required M-files are:
 (Every file required for FDTR) +
-"TDTR_3DAni_getVout_wOffset_v2.m"
+"TDTR_3DAni_TDTR_Sig.m"
 
 To calculate the TDTR signal:
 
-- the call to "TDTR_3DAni_getVout_wOffset_v2.m" computes the TDTR signal by summing over all relavant frequency domain responses.  The call format is:
+- the call to "TDTR_3DAni_TDTR_Sig.m" computes the TDTR signal by summing over all relavant frequency domain responses.  The call format is:
 
-[Vout] = TDTR_3DAni_getVout_wOffset_v2(tdelay,k,C,h,f,tau_rep,wp_x,wp_y,Qp,ws_x,ws_y,TCR,xoffset,yoffset)
+[Vout, Vin, ratio] = TDTR_3DAni_TDTR_Sig(tdelay,k,C,h,f,tau_rep,wp_x,wp_y,Qp,ws_x,ws_y,TCR,xoffset,yoffset)
 
 where "tdelay" is a vector of time delays.  If TCR=1, then "Vout" is the Out-of-phase Temperature, if TCR is the thermoreflectance coefficient, then "Vout" is the out-of-phase reflectivity signal. 
 %%%%%%%%%%%%%%%%
